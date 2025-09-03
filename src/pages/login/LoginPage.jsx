@@ -1,18 +1,25 @@
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+// import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import LoginIcon from "@mui/icons-material/Login";
 
+import BG from "../../assets/Dark Blue Background.png";
+
 function LoginPage() {
   return (
-    <Container
+    <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        width: "100vw",
+        backgroundImage: `url(${BG})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <Box
@@ -51,7 +58,7 @@ function LoginPage() {
           Ingresar{" "}
         </Button>
       </Box>
-    </Container>
+    </Box>
   );
 }
 
