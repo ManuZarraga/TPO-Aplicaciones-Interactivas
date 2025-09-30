@@ -9,6 +9,7 @@ export default function LandingPage() {
   return (
     <div className="app-container">
       <Sidebar />
+      {/* mobile pasando los 600px REVISAR */}
       <main className="main-content">
         <section className="info-section">
           <InfoMedico />
