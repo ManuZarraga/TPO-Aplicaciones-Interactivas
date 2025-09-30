@@ -1,65 +1,64 @@
-import Box from "@mui/material/Box";
-// import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import LoginIcon from "@mui/icons-material/Login";
-
+import { useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 import BG from "../../assets/Dark Blue Background.png";
+import AvatarMedico from "../../assets/Medico.jpg";
+import { useState } from "react";
 
-function LoginPage() {
+export default function LoginPage() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === "gosling@medical.com" && password === "medical123") {
+      navigate("/admin");
+    } else {
+      // Optionally show an error
+      alert("Credenciales incorrectas");
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
+    <div
+      className="login-bg"
+      style={{
         backgroundImage: `url(${BG})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
-      <Box
-        sx={{
-          width: 300,
-          height: 400,
-          padding: 5,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: 2,
-          borderRadius: 1,
-          boxShadow: 3,
-          backgroundColor: "#fff",
-        }}
-      >
-        <Avatar
-          sx={{ width: "100px", height: "100px" }}
-          src="/broken-image.jpg"
-        />
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-          }}
-        >
-          <TextField label="Email" variant="outlined" />
-          <TextField label="Contraseña" variant="outlined" type="password" />
-        </Box>
-
-        <Button variant="contained" size="large" startIcon={<LoginIcon />}>
-          {" "}
-          Ingresar{" "}
-        </Button>
-      </Box>
-    </Box>
+      <div className="login-container">
+        <img className="login-avatar" src={AvatarMedico} alt="Avatar" />
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Ingrese su email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="password">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Ingrese su contraseña"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" className="btn login-btn">
+            Ingresar
+          </button>
+          <button
+            type="button"
+            className="btn back-btn"
+            onClick={() => navigate("/")}
+          >
+            Volver al Inicio
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
-
-export default LoginPage;

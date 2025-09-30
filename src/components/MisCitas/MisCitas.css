@@ -1,13 +1,12 @@
 .mis-citas {
-    background: var(--white);
     padding: 20px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    margin-top: 40px;
 }
 
-.mis-citas h2 {
+.mis-citas h1 {
+    text-align: center;
     margin-bottom: 15px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: var(--primary);
 }
 
@@ -73,7 +72,7 @@
         overflow-x: auto;
     }
 
-    .mis-citas h2 {
+    .mis-citas h1 {
         font-size: 1rem;
         margin-bottom: 8px;
     }

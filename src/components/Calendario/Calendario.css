@@ -38,7 +38,7 @@
 .rbc-month-view .rbc-date-cell button,
 .rbc-month-view .rbc-date-cell {
     background: transparent !important;
-    color: inherit !important;
+    color: var(--text-dark) !important;
     border: none !important;
     box-shadow: none !important;
     font-weight: normal !important;

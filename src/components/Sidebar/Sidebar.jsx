@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import FormularioObraSocial from "../FormularioObraSocial/FormularioObraSocial";
 
 // eslint-disable-next-line react/prop-types
 export default function Sidebar({ onAddObraSocial }) {
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpen = () => setShowPopup(true);
   const handleClose = () => setShowPopup(false);
@@ -19,7 +21,9 @@ export default function Sidebar({ onAddObraSocial }) {
           <button className="btn" onClick={handleOpen}>
             Crear Obra Social
           </button>
-          <button className="btn">Admin Panel Médico</button>
+          <button className="btn" onClick={() => navigate("/login")}>
+            Admin Panel Médico
+          </button>
         </div>
       </aside>
       {showPopup && (

@@ -28,7 +28,7 @@ export default function MisCitas() {
 
   return (
     <div className="mis-citas">
-      <h2>Mis Citas</h2>
+      <h1>Citas Agendadas</h1>
       <div className="citas-list">
         {citas.map((cita) => (
           <div key={cita.id} className="cita-card">
