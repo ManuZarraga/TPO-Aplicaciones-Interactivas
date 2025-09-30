@@ -6,7 +6,8 @@ import "./FormularioReservas.css";
 
 const localizer = momentLocalizer(moment);
 
-export default function FormularioReservas() {
+// eslint-disable-next-line react/prop-types
+export default function FormularioReservas({ obrasSociales = [] }) {
   const [formData, setFormData] = useState({
     nombreMedico: "",
     nombrePaciente: "",
@@ -15,13 +16,21 @@ export default function FormularioReservas() {
     obraSocial: "",
   });
 
-  const obrasSociales = ["OSDE", "Swiss Medical", "Galeno", "Medicus"];
-
   const [events] = useState([
     {
-      title: "Consulta Dr. John Doe",
-      start: new Date(2025, 9, 10, 12, 0),
-      end: new Date(2025, 9, 10, 13, 0),
+      title: "Consulta Manuel Zarraga",
+      start: new Date(2025, 9, 6, 9, 30), // está zero-based (month 9)
+      end: new Date(2025, 9, 6, 10, 30),
+    },
+    {
+      title: "Consulta Federico DiPasquasio",
+      start: new Date(2025, 9, 8, 12, 0),
+      end: new Date(2025, 9, 8, 13, 0),
+    },
+    {
+      title: "Consulta Cosme Fulanito",
+      start: new Date(2025, 9, 20, 15, 0),
+      end: new Date(2025, 9, 20, 16, 0),
     },
   ]);
 

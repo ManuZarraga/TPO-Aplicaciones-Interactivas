@@ -1,26 +1,33 @@
-import InfoMedico from "../../components/InfoMedico/InfoMedico";
-import MisCitas from "../../components/MisCitas/MisCitas";
-import Calendario from "../../components/Calendario/Calendario";
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import FormularioReservas from "../../components/FormularioReservas/FormularioReservas";
+import InfoMedico from "../../components/InfoMedico/InfoMedico";
 import "../../App.css";
 
 export default function LandingPage() {
+  const [obrasSociales, setObrasSociales] = useState([
+    "OSDE",
+    "Swiss Medical",
+    "Galeno",
+    "Medicus",
+  ]);
+
+  const handleAddObraSocial = (nuevaObra) => {
+    if (!obrasSociales.includes(nuevaObra)) {
+      setObrasSociales([...obrasSociales, nuevaObra]);
+    }
+  };
+
   return (
     <div className="app-container">
-      <Sidebar />
-      {/* mobile pasando los 600px REVISAR */}
+      <Sidebar onAddObraSocial={handleAddObraSocial} />
       <main className="main-content">
         <section className="info-section">
           <InfoMedico />
         </section>
         <section className="citas-section">
-          {/* <MisCitas /> */}
-          <FormularioReservas />
+          <FormularioReservas obrasSociales={obrasSociales} />
         </section>
-        {/* <section className="calendario-section">
-          <Calendario />
-        </section> */}
       </main>
     </div>
   );
