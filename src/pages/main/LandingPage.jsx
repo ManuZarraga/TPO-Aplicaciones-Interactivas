@@ -2,6 +2,7 @@ import InfoMedico from "../../components/InfoMedico/InfoMedico";
 import MisCitas from "../../components/MisCitas/MisCitas";
 import Calendario from "../../components/Calendario/Calendario";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import FormularioReservas from "../../components/FormularioReservas/FormularioReservas";
 import "../../App.css";
 
 export default function LandingPage() {
@@ -13,11 +14,12 @@ export default function LandingPage() {
           <InfoMedico />
         </section>
         <section className="citas-section">
-          <MisCitas />
+          {/* <MisCitas /> */}
+          <FormularioReservas />
         </section>
-        <section className="calendario-section">
+        {/* <section className="calendario-section">
           <Calendario />
-        </section>
+        </section> */}
       </main>
     </div>
   );

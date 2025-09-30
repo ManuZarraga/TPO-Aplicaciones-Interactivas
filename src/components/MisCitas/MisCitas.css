@@ -1,0 +1,95 @@
+.mis-citas {
+    background: var(--white);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.mis-citas h2 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.citas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cita-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9ff;
+    border: 1px solid #e1e4f2;
+    border-radius: 12px;
+    padding: 15px 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.cita-card:hover {
+    transform: translateY(-2px);
+}
+
+.cita-info p {
+    margin: 6px 0;
+    color: var(--text-dark);
+}
+
+.estado {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-left: 8px;
+}
+
+.estado.solicitado {
+    background: #ffe066;
+    color: #856404;
+}
+
+.estado.confirmado {
+    background: #d3f9d8;
+    color: #2b8a3e;
+}
+
+.estado.cancelado {
+    background: #ffa8a8;
+    color: #842029;
+}
+
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+@media (max-width: 600px) {
+    .mis-citas {
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: none;
+        overflow-x: auto;
+    }
+
+    .mis-citas h2 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .cita-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 8px;
+        font-size: 0.95rem;
+    }
+
+    .cita-info p {
+        font-size: 0.95rem;
+    }
+
+    .acciones {
+        margin-top: 8px;
+    }
+}

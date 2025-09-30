@@ -1,0 +1,15 @@
+.acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn.small {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+}
+
+.btn.small:hover {
+    background: var(--secondary);
+    color: white;
+}

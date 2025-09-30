@@ -1,4 +1,5 @@
 import BotonesAccion from "../BotonesAccion/BotonesAccion";
+import "./MisCitas.css";
 
 export default function MisCitas() {
   const citas = [

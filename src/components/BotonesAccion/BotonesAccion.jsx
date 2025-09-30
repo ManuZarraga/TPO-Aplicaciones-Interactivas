@@ -1,3 +1,5 @@
+import "./BotonesAccion.css";
+
 export default function BotonesAccion() {
   return (
     <div className="acciones">
