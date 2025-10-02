@@ -1,8 +1,15 @@
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import BotonesAccion from "../BotonesAccion/BotonesAccion";
 import "./MisCitas.css";
 
-// eslint-disable-next-line react/prop-types
-export default function MisCitas({ citas = [] }) {
+export default function MisCitas({
+  citas = [],
+  onEditAppointment,
+  onDeleteAppointment,
+}) {
+  const [deletePopup, setDeletePopup] = useState({ open: false, cita: null });
+
   return (
     <div className="mis-citas">
       <h1>Citas Agendadas</h1>
@@ -29,10 +36,53 @@ export default function MisCitas({ citas = [] }) {
                 </span>
               </p>
             </div>
-            <BotonesAccion />
+            <BotonesAccion
+              estado={cita.estado}
+              onEdit={() =>
+                onEditAppointment(
+                  cita.id,
+                  cita.estado === "Solicitado" ? "Confirmado" : "Solicitado"
+                )
+              }
+              onDelete={() => setDeletePopup({ open: true, cita })}
+            />
           </div>
         ))}
       </div>
+      {deletePopup.open && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>
+              ¿Está seguro que desea eliminar la cita de{" "}
+              <b>{deletePopup.cita.nombre}</b> el día{" "}
+              <b>{deletePopup.cita.fecha}</b>?
+            </p>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                marginTop: "1rem",
+              }}
+            >
+              <button
+                className="btn"
+                onClick={() => {
+                  onDeleteAppointment(deletePopup.cita.id);
+                  setDeletePopup({ open: false, cita: null });
+                }}
+              >
+                Sí, eliminar
+              </button>
+              <button
+                className="btn"
+                onClick={() => setDeletePopup({ open: false, cita: null })}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

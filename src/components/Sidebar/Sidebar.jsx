@@ -1,10 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import FormularioObraSocial from "../FormularioObraSocial/FormularioObraSocial";
 
-// eslint-disable-next-line react/prop-types
-export default function Sidebar({ onAddObraSocial }) {
+export default function Sidebar({
+  onAddObraSocial,
+  obrasSociales,
+  onDeleteObraSocial,
+}) {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
@@ -32,6 +36,8 @@ export default function Sidebar({ onAddObraSocial }) {
             <FormularioObraSocial
               onClose={handleClose}
               onAddObraSocial={onAddObraSocial}
+              obrasSociales={obrasSociales}
+              onDeleteObraSocial={onDeleteObraSocial}
             />
           </div>
         </div>

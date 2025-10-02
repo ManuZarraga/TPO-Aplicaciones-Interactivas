@@ -1,10 +1,14 @@
+/* eslint-disable react/prop-types */
 import MisCitas from "../../components/MisCitas/MisCitas";
 import "../../components/MisCitas/MisCitas.css";
 import { useNavigate } from "react-router-dom";
 import "./AdminPanel.css";
 
-// eslint-disable-next-line react/prop-types
-export default function AdminPanel({ appointments }) {
+export default function AdminPanel({
+  appointments,
+  onEditAppointment,
+  onDeleteAppointment,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +16,11 @@ export default function AdminPanel({ appointments }) {
       <button className="admin-logout-btn" onClick={() => navigate("/")}>
         Logout
       </button>
-      <MisCitas citas={appointments} />
+      <MisCitas
+        citas={appointments}
+        onEditAppointment={onEditAppointment}
+        onDeleteAppointment={onDeleteAppointment}
+      />
     </div>
   );
 }

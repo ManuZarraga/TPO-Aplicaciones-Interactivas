@@ -58,6 +58,22 @@ function App() {
     }
   };
 
+  const handleDeleteObraSocial = (obra) => {
+    setObrasSociales(obrasSociales.filter((o) => o !== obra));
+  };
+
+  const handleEditAppointment = (id, newEstado) => {
+    setAppointments(
+      appointments.map((app) =>
+        app.id === id ? { ...app, estado: newEstado } : app
+      )
+    );
+  };
+
+  const handleDeleteAppointment = (id) => {
+    setAppointments(appointments.filter((app) => app.id !== id));
+  };
+
   return (
     <Router>
       <Routes>
@@ -69,13 +85,20 @@ function App() {
               appointments={appointments}
               onAddAppointment={handleAddAppointment}
               onAddObraSocial={handleAddObraSocial}
+              onDeleteObraSocial={handleDeleteObraSocial}
             />
           }
         />
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/admin"
-          element={<AdminPanel appointments={appointments} />}
+          element={
+            <AdminPanel
+              appointments={appointments}
+              onEditAppointment={handleEditAppointment}
+              onDeleteAppointment={handleDeleteAppointment}
+            />
+          }
         />
       </Routes>
     </Router>

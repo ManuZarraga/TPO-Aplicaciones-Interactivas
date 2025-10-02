@@ -1,28 +1,21 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import "./FormularioObraSocial.css";
 
-// eslint-disable-next-line react/prop-types
-export default function FormularioObraSocial({ onClose, onAddObraSocial }) {
-  const [formData, setFormData] = useState({
-    nombreObraSocial: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+export default function FormularioObraSocial({
+  onClose,
+  onAddObraSocial,
+  obrasSociales,
+  onDeleteObraSocial,
+}) {
+  const [nombreObraSocial, setNombreObraSocial] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.nombreObraSocial.trim()) {
-      onAddObraSocial(formData.nombreObraSocial.trim());
-      setFormData({ nombreObraSocial: "" });
-      onClose();
+    if (nombreObraSocial.trim()) {
+      onAddObraSocial(nombreObraSocial.trim());
+      setNombreObraSocial("");
     }
-  };
-
-  const handleCancel = (e) => {
-    e.preventDefault();
-    onClose();
   };
 
   return (
@@ -31,28 +24,42 @@ export default function FormularioObraSocial({ onClose, onAddObraSocial }) {
         ✖
       </button>
       <div className="formulario">
-        <h2>Crear Obra Social</h2>
+        <h2>Obras Sociales</h2>
         <form onSubmit={handleSubmit} className="form-container">
           <div className="form-group">
-            <label>Nombre de la Obra Social</label>
+            <label>Agregar Obra Social</label>
             <input
               type="text"
-              name="nombreObraSocial"
-              value={formData.nombreObraSocial}
-              onChange={handleChange}
+              value={nombreObraSocial}
+              onChange={(e) => setNombreObraSocial(e.target.value)}
               placeholder="Ej: Swiss Medical"
               required
             />
           </div>
           <div className="form-actions">
             <button type="submit" className="btn">
-              Crear
+              Agregar
             </button>
-            <button type="button" className="btn" onClick={handleCancel}>
+            <button type="button" className="btn" onClick={onClose}>
               Cancelar
             </button>
           </div>
         </form>
+        <h3>Eliminar Obra Social</h3>
+        <ul className="obra-social-list">
+          {obrasSociales.map((obra, idx) => (
+            <li key={idx} className="obra-social-item">
+              {obra}
+              <button
+                className="delete-obra-btn"
+                onClick={() => onDeleteObraSocial(obra)}
+                title={`Eliminar ${obra}`}
+              >
+                🗑️
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

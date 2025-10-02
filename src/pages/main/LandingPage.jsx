@@ -9,10 +9,15 @@ export default function LandingPage({
   appointments,
   onAddAppointment,
   onAddObraSocial,
+  onDeleteObraSocial,
 }) {
   return (
     <div className="app-container">
-      <Sidebar onAddObraSocial={onAddObraSocial} />
+      <Sidebar
+        obrasSociales={obrasSociales}
+        onAddObraSocial={onAddObraSocial}
+        onDeleteObraSocial={onDeleteObraSocial}
+      />
       <main className="main-content">
         <section className="info-section">
           <InfoMedico />

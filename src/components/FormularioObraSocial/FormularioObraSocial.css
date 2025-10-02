@@ -110,6 +110,52 @@
     z-index: 10;
 }
 
+.obra-social-list {
+    list-style: none;
+    padding: 0;
+    margin: 1px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.obra-social-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9ff;
+    border: 1px solid #e1e4f2;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    box-shadow: var(--shadow);
+    transition: background 0.2s;
+}
+
+.obra-social-item:hover {
+    background: #f1f3fb;
+}
+
+.delete-obra-btn {
+    background: var(--danger);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-left: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-obra-btn:hover {
+    background: #ff8787;
+}
+
 @media (max-width: 600px) {
     .formulario {
         padding: 8px;
@@ -126,5 +172,15 @@
         min-width: 90vw !important;
         max-width: 98vw !important;
         padding: 0 !important;
+    }
+
+    .obra-social-item {
+        padding: 6px 8px;
+        font-size: 0.98rem;
+    }
+
+    .delete-obra-btn {
+        padding: 5px 8px;
+        font-size: 1rem;
     }
 }
