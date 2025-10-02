@@ -19,6 +19,22 @@ body {
   color: var(--text-dark);
 }
 
+/* ==== TOAST ==== */
+.custom-toast {
+  background: #e6faea !important;
+  color: #1b5e20 !important;
+  font-weight: 500;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.08);
+}
+
+.Toastify__toast--error {
+  background: #ffeaea !important;
+  color: #b71c1c !important;
+  font-weight: 500;
+  border-radius: 10px !important;
+}
+
 /* ==== LAYOUT GENERAL ==== */
 .app-container {
   display: flex;

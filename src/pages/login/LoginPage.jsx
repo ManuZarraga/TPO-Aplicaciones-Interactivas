@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import BG from "../../assets/Dark Blue Background.png";
 import AvatarMedico from "../../assets/Medico.jpg";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -12,10 +13,10 @@ export default function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === "gosling@medical.com" && password === "medical123") {
+      toast.success("Inicio de sesión exitoso");
       navigate("/admin");
     } else {
-      // Optionally show an error
-      alert("Credenciales incorrectas");
+      toast.error("Credenciales incorrectas");
     }
   };
 

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import LandingPage from "./pages/main/LandingPage";
 import LoginPage from "./pages/login/LoginPage";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [obrasSociales, setObrasSociales] = useState([
@@ -48,18 +50,23 @@ function App() {
     },
   ]);
 
-  const handleAddAppointment = (appointment) => {
-    setAppointments([...appointments, appointment]);
-  };
-
+  // Obra Social
   const handleAddObraSocial = (nuevaObra) => {
     if (!obrasSociales.includes(nuevaObra)) {
       setObrasSociales([...obrasSociales, nuevaObra]);
+      toast.success("Obra Social agregada correctamente");
     }
   };
 
   const handleDeleteObraSocial = (obra) => {
     setObrasSociales(obrasSociales.filter((o) => o !== obra));
+    toast.success("Obra Social eliminada correctamente");
+  };
+
+  // Citas
+  const handleAddAppointment = (appointment) => {
+    setAppointments([...appointments, appointment]);
+    toast.success("Turno reservado correctamente");
   };
 
   const handleEditAppointment = (id, newEstado) => {
@@ -68,39 +75,55 @@ function App() {
         app.id === id ? { ...app, estado: newEstado } : app
       )
     );
+    toast.success("Se modificó el estado del turno");
   };
 
   const handleDeleteAppointment = (id) => {
     setAppointments(appointments.filter((app) => app.id !== id));
+    toast.success("Turno eliminado correctamente");
   };
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <LandingPage
-              obrasSociales={obrasSociales}
-              appointments={appointments}
-              onAddAppointment={handleAddAppointment}
-              onAddObraSocial={handleAddObraSocial}
-              onDeleteObraSocial={handleDeleteObraSocial}
-            />
-          }
+      <>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <LandingPage
+                obrasSociales={obrasSociales}
+                appointments={appointments}
+                onAddAppointment={handleAddAppointment}
+                onAddObraSocial={handleAddObraSocial}
+                onDeleteObraSocial={handleDeleteObraSocial}
+              />
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminPanel
+                appointments={appointments}
+                onEditAppointment={handleEditAppointment}
+                onDeleteAppointment={handleDeleteAppointment}
+              />
+            }
+          />
+        </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          toastClassName="custom-toast"
         />
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/admin"
-          element={
-            <AdminPanel
-              appointments={appointments}
-              onEditAppointment={handleEditAppointment}
-              onDeleteAppointment={handleDeleteAppointment}
-            />
-          }
-        />
-      </Routes>
+      </>
     </Router>
   );
 }

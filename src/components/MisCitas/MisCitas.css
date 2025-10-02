@@ -64,6 +64,77 @@
     gap: 8px;
 }
 
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+    padding: 1rem;
+    min-width: 340px;
+    max-width: 90vw;
+    text-align: center;
+    font-size: 1.08rem;
+    color: var(--text-dark);
+    animation: popup-fade-in 0.2s;
+}
+
+@keyframes popup-fade-in {
+    from {
+        transform: scale(0.97);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.08rem;
+}
+
+.popup-content .btn {
+    min-width: 110px;
+    font-size: 1rem;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.popup-content .btn:first-child {
+    background: var(--danger);
+    color: #fff;
+}
+
+.popup-content .btn:first-child:hover {
+    background: #ff8787;
+}
+
+.popup-content .btn:last-child {
+    background: #f1f3fb;
+    color: var(--primary);
+    margin-left: 8px;
+}
+
+.popup-content .btn:last-child:hover {
+    background: #e1e4f2;
+}
+
 @media (max-width: 600px) {
     .mis-citas {
         padding: 8px;
@@ -90,5 +161,25 @@
 
     .acciones {
         margin-top: 8px;
+    }
+
+    .popup-content .btn {
+        min-width: 90px;
+        font-size: 0.97rem;
+        padding: 9px 0;
+        margin: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .popup-content .btn:last-child {
+        margin-left: 0;
+    }
+
+    .popup-content .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
     }
 }
