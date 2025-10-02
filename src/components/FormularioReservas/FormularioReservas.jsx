@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -6,33 +7,19 @@ import "./FormularioReservas.css";
 
 const localizer = momentLocalizer(moment);
 
-// eslint-disable-next-line react/prop-types
-export default function FormularioReservas({ obrasSociales = [] }) {
+export default function FormularioReservas({
+  obrasSociales = [],
+  appointments = [],
+  onAddAppointment,
+}) {
   const [formData, setFormData] = useState({
     nombreMedico: "",
     nombrePaciente: "",
     telefono: "",
     email: "",
     obraSocial: "",
+    fechaTurno: "",
   });
-
-  const [events] = useState([
-    {
-      title: "Consulta Manuel Zarraga",
-      start: new Date(2025, 9, 6, 9, 30), // está zero-based (month 9)
-      end: new Date(2025, 9, 6, 10, 30),
-    },
-    {
-      title: "Consulta Federico DiPasquasio",
-      start: new Date(2025, 9, 8, 12, 0),
-      end: new Date(2025, 9, 8, 13, 0),
-    },
-    {
-      title: "Consulta Cosme Fulanito",
-      start: new Date(2025, 9, 20, 15, 0),
-      end: new Date(2025, 9, 20, 16, 0),
-    },
-  ]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,7 +27,32 @@ export default function FormularioReservas({ obrasSociales = [] }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", formData);
+    const newAppointment = {
+      id: Date.now(),
+      nombre: formData.nombrePaciente,
+      nombreMedico: formData.nombreMedico,
+      fecha: new Date(formData.fechaTurno).toLocaleString("es-AR", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      obraSocial: formData.obraSocial,
+      estado: "Solicitado",
+      // Calendario:
+      title: `Consulta ${formData.nombrePaciente}`,
+      start: new Date(formData.fechaTurno),
+      end: new Date(new Date(formData.fechaTurno).getTime() + 30 * 60000), // 30 min
+    };
+    onAddAppointment(newAppointment);
+    setFormData({
+      nombreMedico: "",
+      nombrePaciente: "",
+      telefono: "",
+      email: "",
+      obraSocial: "",
+      fechaTurno: "",
+    });
   };
 
   return (
@@ -107,6 +119,16 @@ export default function FormularioReservas({ obrasSociales = [] }) {
             ))}
           </select>
         </div>
+        <div className="form-group">
+          <label>Fecha y Hora del Turno</label>
+          <input
+            type="datetime-local"
+            name="fechaTurno"
+            value={formData.fechaTurno || ""}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button type="submit" className="btn">
           Reservar Turno
         </button>
@@ -116,7 +138,7 @@ export default function FormularioReservas({ obrasSociales = [] }) {
         <h3>Calendario de citas</h3>
         <Calendar
           localizer={localizer}
-          events={events}
+          events={appointments}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 400 }}

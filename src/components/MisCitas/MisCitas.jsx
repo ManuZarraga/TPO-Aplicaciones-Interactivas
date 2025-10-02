@@ -1,31 +1,8 @@
 import BotonesAccion from "../BotonesAccion/BotonesAccion";
 import "./MisCitas.css";
 
-export default function MisCitas() {
-  const citas = [
-    {
-      id: 1,
-      nombre: "Manuel Zarraga",
-      fecha: "5 Oct, 12:00hs",
-      obraSocial: "OSDE",
-      estado: "Solicitado",
-    },
-    {
-      id: 2,
-      nombre: "Federico DiPasquasio",
-      fecha: "12 Oct, 15:00hs",
-      obraSocial: "Swiss Medical",
-      estado: "Confirmado",
-    },
-    {
-      id: 3,
-      nombre: "Cosme Fulanito",
-      fecha: "20 Oct, 15:00hs",
-      obraSocial: null,
-      estado: "Cancelado",
-    },
-  ];
-
+// eslint-disable-next-line react/prop-types
+export default function MisCitas({ citas = [] }) {
   return (
     <div className="mis-citas">
       <h1>Citas Agendadas</h1>
@@ -43,8 +20,11 @@ export default function MisCitas() {
                 <strong>Obra Social:</strong> {cita.obraSocial || "N/A"}
               </p>
               <p>
+                <strong>Médico:</strong> {cita.nombreMedico || "N/A"}
+              </p>
+              <p>
                 <strong>Estado:</strong>
-                <span className={`estado ${cita.estado.toLowerCase()}`}>
+                <span className={`estado ${cita.estado?.toLowerCase()}`}>
                   {cita.estado}
                 </span>
               </p>

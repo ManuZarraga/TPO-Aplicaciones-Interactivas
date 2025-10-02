@@ -3,7 +3,8 @@ import "../../components/MisCitas/MisCitas.css";
 import { useNavigate } from "react-router-dom";
 import "./AdminPanel.css";
 
-export default function AdminPanel() {
+// eslint-disable-next-line react/prop-types
+export default function AdminPanel({ appointments }) {
   const navigate = useNavigate();
 
   return (
@@ -11,7 +12,7 @@ export default function AdminPanel() {
       <button className="admin-logout-btn" onClick={() => navigate("/")}>
         Logout
       </button>
-      <MisCitas />
+      <MisCitas citas={appointments} />
     </div>
   );
 }
