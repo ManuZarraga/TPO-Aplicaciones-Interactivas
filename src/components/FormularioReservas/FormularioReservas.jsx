@@ -4,6 +4,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./FormularioReservas.css";
+import { toast } from "react-toastify";
 
 const localizer = momentLocalizer(moment);
 
@@ -27,6 +28,17 @@ export default function FormularioReservas({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const selectedDate = new Date(formData.fechaTurno).getTime();
+    const overlap = appointments.some(
+      (appt) => new Date(appt.start).getTime() === selectedDate
+    );
+
+    if (overlap) {
+      toast.error("Ya existe un turno reservado para esa fecha y hora.");
+      return;
+    }
+
     const newAppointment = {
       id: Date.now(),
       nombre: formData.nombrePaciente,
@@ -39,10 +51,9 @@ export default function FormularioReservas({
       }),
       obraSocial: formData.obraSocial,
       estado: "Solicitado",
-      // Calendario:
       title: `Consulta ${formData.nombrePaciente}`,
       start: new Date(formData.fechaTurno),
-      end: new Date(new Date(formData.fechaTurno).getTime() + 30 * 60000), // 30 min
+      end: new Date(new Date(formData.fechaTurno).getTime() + 30 * 60000),
     };
     onAddAppointment(newAppointment);
     setFormData({
