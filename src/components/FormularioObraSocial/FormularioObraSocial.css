@@ -163,10 +163,24 @@
 }
 
 @media (max-width: 600px) {
+    .popup-content {
+        width: 92vw !important;
+        max-width: 360px !important;
+        min-width: unset !important;
+        margin: 32px auto !important;
+        padding: 0 !important;
+        border-radius: 14px;
+        box-sizing: border-box;
+        max-height: 90vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .formulario {
-        padding: 8px;
-        border-radius: 8px;
-        box-shadow: none;
+        padding: 10px 6px;
+        gap: 12px;
     }
 
     .formulario-obra-social-popup {

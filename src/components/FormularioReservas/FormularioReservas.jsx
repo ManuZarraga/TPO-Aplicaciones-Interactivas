@@ -26,16 +26,55 @@ export default function FormularioReservas({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  function getMinDate() {
+    const today = new Date();
+    today.setSeconds(0, 0);
+    return today.toISOString().slice(0, 16);
+  }
+
+  function getMaxDate() {
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 14);
+    maxDate.setHours(17, 0, 0, 0);
+    return maxDate.toISOString().slice(0, 16);
+  }
+
+  function getMinDateTime() {
+    const today = new Date();
+    today.setHours(9, 0, 0, 0);
+    return today.toISOString().slice(0, 16);
+  }
+
+  function getMaxDateTime() {
+    const today = new Date();
+    today.setHours(17, 0, 0, 0);
+    return today.toISOString().slice(0, 16);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const selectedDate = new Date(formData.fechaTurno).getTime();
+    const selectedDate = new Date(formData.fechaTurno);
+    const now = new Date();
+    now.setSeconds(0, 0);
+
+    if (selectedDate < now) {
+      toast.error("No se puede reservar un turno en una fecha pasada.");
+      return;
+    }
+
     const overlap = appointments.some(
-      (appt) => new Date(appt.start).getTime() === selectedDate
+      (appt) => new Date(appt.start).getTime() === selectedDate.getTime()
     );
 
     if (overlap) {
       toast.error("Ya existe un turno reservado para esa fecha y hora.");
+      return;
+    }
+
+    const hour = selectedDate.getHours();
+    if (hour < 9 || hour >= 17) {
+      toast.error("El turno debe ser entre las 09:00 y las 17:00.");
       return;
     }
 
@@ -64,6 +103,56 @@ export default function FormularioReservas({
       obraSocial: "",
       fechaTurno: "",
     });
+  };
+
+  const eventPropGetter = (event) => {
+    let backgroundColor = "#339af0";
+
+    if (event.estado === "Solicitado") {
+      backgroundColor = "#ffe066";
+      return {
+        style: {
+          backgroundColor,
+          color: "#856404",
+          borderRadius: "8px",
+          border: "none",
+          fontWeight: 600,
+        },
+      };
+    }
+    if (event.estado === "Confirmado") {
+      backgroundColor = "#d3f9d8";
+      return {
+        style: {
+          backgroundColor,
+          color: "#2b8a3e",
+          borderRadius: "8px",
+          border: "none",
+          fontWeight: 600,
+        },
+      };
+    }
+    if (event.estado === "Cancelado") {
+      backgroundColor = "#ffa8a8";
+      return {
+        style: {
+          backgroundColor,
+          color: "#842029",
+          borderRadius: "8px",
+          border: "none",
+          fontWeight: 600,
+        },
+      };
+    }
+    return {
+      style: {
+        backgroundColor,
+        color: "#fff",
+        borderRadius: "8px",
+        border: "none",
+        fontWeight: 600,
+      },
+    };
   };
 
   return (
@@ -138,6 +227,8 @@ export default function FormularioReservas({
             value={formData.fechaTurno || ""}
             onChange={handleChange}
             required
+            min={getMinDate()}
+            max={getMaxDate()}
           />
         </div>
         <button type="submit" className="btn">
@@ -153,6 +244,9 @@ export default function FormularioReservas({
           startAccessor="start"
           endAccessor="end"
           style={{ height: 400 }}
+          eventPropGetter={eventPropGetter}
+          min={getMinDateTime()}
+          max={getMaxDateTime()}
         />
       </div>
     </div>
