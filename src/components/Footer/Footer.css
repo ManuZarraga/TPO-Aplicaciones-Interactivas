@@ -1,0 +1,25 @@
+.site-footer {
+  margin-top: 36px;
+  padding: 18px 0;
+  background: transparent;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  padding: 0 12px;
+}
+
+.footer-inner .small { 
+    opacity: 0.8 
+}
+
+@media (max-width: 700px) {
+  .footer-inner { 
+    flex-direction: column; 
+    gap: 8px; 
+    align-items: flex-start 
+  }
+}

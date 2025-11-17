@@ -5,7 +5,7 @@ import AvatarMedico from "../../assets/Medico.jpg";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function LoginPage() {
+export default function LoginPage({ onLogin = () => {} }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +14,7 @@ export default function LoginPage() {
     e.preventDefault();
     if (email === "gosling@medical.com" && password === "medical123") {
       toast.success("Inicio de sesión exitoso");
+      onLogin();
       navigate("/admin");
     } else {
       toast.error("Credenciales incorrectas");

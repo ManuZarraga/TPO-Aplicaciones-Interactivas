@@ -57,13 +57,7 @@ export default function MisCitas({
               <b>{deletePopup.cita.nombre}</b> el día{" "}
               <b>{deletePopup.cita.fecha}</b>?
             </p>
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-                marginTop: "1rem",
-              }}
-            >
+            <div className="btn-group">
               <button
                 className="btn"
                 onClick={() => {

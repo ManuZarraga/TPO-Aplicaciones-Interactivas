@@ -1,0 +1,36 @@
+.services {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.services h2 {
+  margin: 0 0 12px 0;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+}
+
+.card {
+  flex: 1 1 0;
+  background: linear-gradient(180deg, #ffffff, #fbfcff);
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(76,110,245,0.06);
+}
+
+.card h4 {
+  margin: 0 0 8px 0;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+@media (max-width: 800px) {
+  .cards { flex-direction: column; }
+}

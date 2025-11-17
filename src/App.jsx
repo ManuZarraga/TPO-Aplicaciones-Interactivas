@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import LandingPage from "./pages/main/LandingPage";
 import LoginPage from "./pages/login/LoginPage";
@@ -7,6 +7,11 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogout = () => setIsAuthenticated(false);
+
   const [obrasSociales, setObrasSociales] = useState([
     "OSDE",
     "Swiss Medical",
@@ -96,18 +101,28 @@ function App() {
                 onAddAppointment={handleAddAppointment}
                 onAddObraSocial={handleAddObraSocial}
                 onDeleteObraSocial={handleDeleteObraSocial}
+                isAuthenticated={isAuthenticated}
+                onLogout={handleLogout}
               />
             }
           />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route
             path="/admin"
             element={
-              <AdminPanel
-                appointments={appointments}
-                onEditAppointment={handleEditAppointment}
-                onDeleteAppointment={handleDeleteAppointment}
-              />
+              isAuthenticated ? (
+                <AdminPanel
+                  appointments={appointments}
+                  onEditAppointment={handleEditAppointment}
+                  onDeleteAppointment={handleDeleteAppointment}
+                  onLogout={handleLogout}
+                  obrasSociales={obrasSociales}
+                  onAddObraSocial={handleAddObraSocial}
+                  onDeleteObraSocial={handleDeleteObraSocial}
+                />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
         </Routes>
