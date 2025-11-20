@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import LandingPage from "./pages/main/LandingPage";
 import LoginPage from "./pages/login/LoginPage";
@@ -127,7 +132,7 @@ function App() {
           />
         </Routes>
         <ToastContainer
-          position="top-right"
+          position="bottom-right"
           autoClose={2500}
           hideProgressBar={false}
           newestOnTop={false}

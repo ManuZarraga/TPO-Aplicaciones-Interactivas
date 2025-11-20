@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import CalendarCheck from "../../assets/calendar-check-svgrepo-com.svg";
 import "./FormularioReservas.css";
 import { toast } from "react-toastify";
 
@@ -157,7 +158,10 @@ export default function FormularioReservas({
 
   return (
     <div className="formulario">
-      <h2>Reservar una Cita</h2>
+      <div className="form-header">
+        <img src={CalendarCheck} alt="calendario" className="form-icon" />
+        <h2>Reservar una Cita</h2>
+      </div>
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
           <label>Nombre y Apellido del Médico</label>

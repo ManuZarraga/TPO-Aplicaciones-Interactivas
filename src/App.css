@@ -20,7 +20,8 @@ body {
 }
 
 /* elimina scroll horizontal */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 

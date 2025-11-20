@@ -2,6 +2,7 @@ import "./Header.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+// eslint-disable-next-line react/prop-types
 export default function Header({ isAuthenticated = false }) {
   const [open, setOpen] = useState(false);
 
@@ -13,16 +14,24 @@ export default function Header({ isAuthenticated = false }) {
         </div>
 
         <nav className={`nav ${open ? "open" : ""}`} aria-expanded={open}>
-          <a href="#about" onClick={() => setOpen(false)}>
+          <a className="navLink" href="#about" onClick={() => setOpen(false)}>
             Nosotros
           </a>
-          <a href="#services" onClick={() => setOpen(false)}>
+          <a
+            className="navLink"
+            href="#services"
+            onClick={() => setOpen(false)}
+          >
             Servicios
           </a>
-          <a href="#reservas" onClick={() => setOpen(false)}>
+          <a
+            className="navLink"
+            href="#reservas"
+            onClick={() => setOpen(false)}
+          >
             Reservas
           </a>
-          <a href="#contact" onClick={() => setOpen(false)}>
+          <a className="navLink" href="#contact" onClick={() => setOpen(false)}>
             Contacto
           </a>
           <Link

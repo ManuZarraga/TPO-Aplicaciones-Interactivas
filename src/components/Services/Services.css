@@ -9,6 +9,20 @@
   margin: 0 0 12px 0;
 }
 
+.services-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.services-icon {
+  width: 44px;
+  height: 44px;
+  padding: 6px;
+  border-radius: 8px;
+}
+
 .cards {
   display: flex;
   gap: 16px;
@@ -19,7 +33,7 @@
   background: linear-gradient(180deg, #ffffff, #fbfcff);
   padding: 18px;
   border-radius: 10px;
-  border: 1px solid rgba(76,110,245,0.06);
+  border: 1px solid rgba(76, 110, 245, 0.06);
 }
 
 .card h4 {
@@ -32,5 +46,7 @@
 }
 
 @media (max-width: 800px) {
-  .cards { flex-direction: column; }
+  .cards {
+    flex-direction: column;
+  }
 }
