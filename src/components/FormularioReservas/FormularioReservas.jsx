@@ -20,47 +20,67 @@ export default function FormularioReservas({
     telefono: "",
     email: "",
     obraSocial: "",
-    fechaTurno: "",
+    fechaTurnoFecha: "",
   });
+  const [selectedHour, setSelectedHour] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "fechaTurnoFecha") {
+      setSelectedHour("");
+    }
   };
 
-  function getMinDate() {
+  function getMinDateOnly() {
     const today = new Date();
-    today.setSeconds(0, 0);
-    return today.toISOString().slice(0, 16);
+    return today.toISOString().slice(0, 10); // yyyy-MM-dd
   }
 
-  function getMaxDate() {
+  function getMaxDateOnly() {
     const maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 14);
-    maxDate.setHours(17, 0, 0, 0);
-    return maxDate.toISOString().slice(0, 16);
+    return maxDate.toISOString().slice(0, 10); // yyyy-MM-dd
   }
 
   function getMinDateTime() {
     const today = new Date();
     today.setHours(9, 0, 0, 0);
-    return today.toISOString().slice(0, 16);
+    return today;
   }
 
   function getMaxDateTime() {
     const today = new Date();
     today.setHours(17, 0, 0, 0);
-    return today.toISOString().slice(0, 16);
+    return today;
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const selectedDate = new Date(formData.fechaTurno);
+    const { fechaTurnoFecha } = formData;
+    const fecha = fechaTurnoFecha;
+    const hora = selectedHour;
+    if (!fecha || !hora) {
+      toast.error("Debe seleccionar una fecha y una hora disponible.");
+      return;
+    }
+
+    // Combinar fecha + hora en un solo Date
+    const selectedDate = new Date(`${fecha}T${hora}`);
     const now = new Date();
     now.setSeconds(0, 0);
 
     if (selectedDate < now) {
       toast.error("No se puede reservar un turno en una fecha pasada.");
+      return;
+    }
+
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 14);
+    maxDate.setHours(23, 59, 59, 999);
+
+    if (selectedDate > maxDate) {
+      toast.error("El turno debe estar dentro de los próximos 14 días.");
       return;
     }
 
@@ -83,7 +103,7 @@ export default function FormularioReservas({
       id: Date.now(),
       nombre: formData.nombrePaciente,
       nombreMedico: formData.nombreMedico,
-      fecha: new Date(formData.fechaTurno).toLocaleString("es-AR", {
+      fecha: selectedDate.toLocaleString("es-AR", {
         day: "2-digit",
         month: "short",
         hour: "2-digit",
@@ -92,18 +112,21 @@ export default function FormularioReservas({
       obraSocial: formData.obraSocial,
       estado: "Solicitado",
       title: `Consulta ${formData.nombrePaciente}`,
-      start: new Date(formData.fechaTurno),
-      end: new Date(new Date(formData.fechaTurno).getTime() + 30 * 60000),
+      start: selectedDate,
+      end: new Date(selectedDate.getTime() + 30 * 60000),
     };
+
     onAddAppointment(newAppointment);
+
     setFormData({
       nombreMedico: "",
       nombrePaciente: "",
       telefono: "",
       email: "",
       obraSocial: "",
-      fechaTurno: "",
+      fechaTurnoFecha: "",
     });
+    setSelectedHour("");
   };
 
   const eventPropGetter = (event) => {
@@ -155,6 +178,37 @@ export default function FormularioReservas({
       },
     };
   };
+
+  const hours = Array.from({ length: 9 }, (_, i) => 9 + i);
+  const hourBadges = formData.fechaTurnoFecha
+    ? hours.map((h) => {
+        const hourStr = h.toString().padStart(2, "0") + ":00";
+        const dateTimeStr = `${formData.fechaTurnoFecha}T${hourStr}`;
+        const isTaken = appointments.some((appt) => {
+          const apptDate = new Date(appt.start);
+          return (
+            apptDate.getFullYear() === new Date(dateTimeStr).getFullYear() &&
+            apptDate.getMonth() === new Date(dateTimeStr).getMonth() &&
+            apptDate.getDate() === new Date(dateTimeStr).getDate() &&
+            apptDate.getHours() === h
+          );
+        });
+        const isSelected = selectedHour === hourStr;
+        return (
+          <button
+            type="button"
+            key={hourStr}
+            className={`hour-badge${isTaken ? " taken" : ""}${
+              isSelected ? " selected" : ""
+            }`}
+            disabled={isTaken}
+            onClick={() => setSelectedHour(hourStr)}
+          >
+            {hourStr}
+          </button>
+        );
+      })
+    : null;
 
   return (
     <div className="formulario">
@@ -224,17 +278,23 @@ export default function FormularioReservas({
           </select>
         </div>
         <div className="form-group">
-          <label>Fecha y Hora del Turno</label>
+          <label>Fecha del Turno</label>
           <input
-            type="datetime-local"
-            name="fechaTurno"
-            value={formData.fechaTurno || ""}
+            type="date"
+            name="fechaTurnoFecha"
+            value={formData.fechaTurnoFecha}
             onChange={handleChange}
             required
-            min={getMinDate()}
-            max={getMaxDate()}
+            min={getMinDateOnly()}
+            max={getMaxDateOnly()}
           />
         </div>
+        {formData.fechaTurnoFecha && (
+          <div className="form-group">
+            <label>Hora del Turno</label>
+            <div className="hour-badges-row">{hourBadges}</div>
+          </div>
+        )}
         <button type="submit" className="btn">
           Reservar Turno
         </button>

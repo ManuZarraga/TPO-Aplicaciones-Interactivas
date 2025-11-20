@@ -1,3 +1,62 @@
+.hour-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+button.hour-badge {
+    background: #ffffff !important;
+    color: #1b5e20 !important;
+    border: 1px solid #b2f2bb !important;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 3s ease,
+        color 3s ease,
+        border-color 3s ease,
+        box-shadow 3s ease;
+}
+
+.hour-badge:hover:not(.taken) {
+    background-color: #1b5e20 !important;
+    color: #ffffff !important;
+    border-color: #1b5e20 !important;
+}
+
+.hour-badge.selected {
+    background-color: #1b5e20 !important;
+    color: #ffffff !important;
+    border-color: #1b5e20 !important;
+}
+
+.hour-badge.taken {
+    background: #ffeaea !important;
+    color: #b71c1c !important;
+    border: 1px solid #ffa8a8 !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.hour-badge:focus-visible {
+    box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.18);
+}
+
+@media (max-width: 600px) {
+    .hour-badges-row {
+        gap: 6px;
+        justify-content: flex-start;
+    }
+
+    .hour-badge {
+        padding: 8px 8px;
+        font-size: 0.98rem;
+    }
+}
+
 .formulario {
     background: var(--white);
     padding: 24px;
@@ -65,7 +124,7 @@
 .formulario button {
     align-self: flex-start;
     margin-top: 10px;
-    background: var(--primary);
+    /* background: var(--primary); */
     color: white;
     border: none;
     padding: 12px 20px;
@@ -101,6 +160,10 @@
     margin: 0 4px;
     font-weight: 600;
     transition: background 0.2s;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
 }
 
 .rbc-toolbar button.rbc-active {
