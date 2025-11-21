@@ -1,13 +1,62 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CalendarCheck from "../../assets/calendar-check-svgrepo-com.svg";
 import "./FormularioReservas.css";
 import { toast } from "react-toastify";
 
+moment.locale("es");
 const localizer = momentLocalizer(moment);
+
+const MOBILE_BREAKPOINT = 768;
+
+const messages = {
+  allDay: "Todo el día",
+  previous: "Anterior",
+  next: "Siguiente",
+  today: "Hoy",
+  month: "Mes",
+  week: "Semana",
+  day: "Día",
+  agenda: "Agenda",
+  date: "Fecha",
+  time: "Hora",
+  event: "Evento",
+  noEventsInRange: "Sin eventos en este rango.",
+  showMore: (total) => `+${total} de más`,
+};
+
+const mobileViews = ["day", "agenda"];
+const desktopViews = ["month", "day"];
+
+const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+
+const HOURS = Array.from({ length: 9 }, (_, i) => 9 + i);
+
+function getMinDateOnly() {
+  const today = new Date();
+  return today.toISOString().slice(0, 10); // yyyy-MM-dd
+}
+
+function getMaxDateOnly() {
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 14);
+  return maxDate.toISOString().slice(0, 10); // yyyy-MM-dd
+}
+
+function getMinDateTime() {
+  const today = new Date();
+  today.setHours(9, 0, 0, 0);
+  return today;
+}
+
+function getMaxDateTime() {
+  const today = new Date();
+  today.setHours(17, 59, 59, 999);
+  return today;
+}
 
 export default function FormularioReservas({
   obrasSociales = [],
@@ -22,24 +71,24 @@ export default function FormularioReservas({
     obraSocial: "",
     fechaTurnoFecha: "",
   });
+
   const [selectedHour, setSelectedHour] = useState("");
 
   const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
+    typeof window !== "undefined"
+      ? window.innerWidth < MOBILE_BREAKPOINT
+      : false
   );
+
+  const [currentView, setCurrentView] = useState("month");
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const [currentView, setCurrentView] = useState("month");
-
-  const mobileViews = ["day", "agenda"];
-  const desktopViews = ["month", "day"];
 
   const activeViews = isMobile ? mobileViews : desktopViews;
   const defaultView = isMobile ? "day" : "month";
@@ -49,34 +98,11 @@ export default function FormularioReservas({
     : defaultView;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     if (e.target.name === "fechaTurnoFecha") {
       setSelectedHour("");
     }
   };
-
-  function getMinDateOnly() {
-    const today = new Date();
-    return today.toISOString().slice(0, 10); // yyyy-MM-dd
-  }
-
-  function getMaxDateOnly() {
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 14);
-    return maxDate.toISOString().slice(0, 10); // yyyy-MM-dd
-  }
-
-  function getMinDateTime() {
-    const today = new Date();
-    today.setHours(9, 0, 0, 0);
-    return today;
-  }
-
-  function getMaxDateTime() {
-    const today = new Date();
-    today.setHours(17, 59, 59, 999);
-    return today;
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,6 +110,7 @@ export default function FormularioReservas({
     const { fechaTurnoFecha } = formData;
     const fecha = fechaTurnoFecha;
     const hora = selectedHour;
+
     if (!fecha || !hora) {
       toast.error("Debe seleccionar una fecha y una hora disponible.");
       return;
@@ -136,7 +163,7 @@ export default function FormularioReservas({
       estado: "Solicitado",
       title: `Consulta ${formData.nombrePaciente}`,
       start: selectedDate,
-      end: new Date(selectedDate.getTime() + 30 * 60000),
+      end: new Date(selectedDate.getTime() + 30 * 60 * 1000),
     };
 
     onAddAppointment(newAppointment);
@@ -154,47 +181,23 @@ export default function FormularioReservas({
 
   const eventPropGetter = (event) => {
     let backgroundColor = "#339af0";
+    let color = "#fff";
 
     if (event.estado === "Solicitado") {
       backgroundColor = "#ffe066";
-      return {
-        style: {
-          backgroundColor,
-          color: "#856404",
-          borderRadius: "8px",
-          border: "none",
-          fontWeight: 600,
-        },
-      };
-    }
-    if (event.estado === "Confirmado") {
+      color = "#856404";
+    } else if (event.estado === "Confirmado") {
       backgroundColor = "#d3f9d8";
-      return {
-        style: {
-          backgroundColor,
-          color: "#2b8a3e",
-          borderRadius: "8px",
-          border: "none",
-          fontWeight: 600,
-        },
-      };
-    }
-    if (event.estado === "Cancelado") {
+      color = "#2b8a3e";
+    } else if (event.estado === "Cancelado") {
       backgroundColor = "#ffa8a8";
-      return {
-        style: {
-          backgroundColor,
-          color: "#842029",
-          borderRadius: "8px",
-          border: "none",
-          fontWeight: 600,
-        },
-      };
+      color = "#842029";
     }
+
     return {
       style: {
         backgroundColor,
-        color: "#fff",
+        color,
         borderRadius: "8px",
         border: "none",
         fontWeight: 600,
@@ -202,21 +205,24 @@ export default function FormularioReservas({
     };
   };
 
-  const hours = Array.from({ length: 9 }, (_, i) => 9 + i);
   const hourBadges = formData.fechaTurnoFecha
-    ? hours.map((h) => {
+    ? HOURS.map((h) => {
         const hourStr = h.toString().padStart(2, "0") + ":00";
         const dateTimeStr = `${formData.fechaTurnoFecha}T${hourStr}`;
+        const targetDate = new Date(dateTimeStr);
+
         const isTaken = appointments.some((appt) => {
           const apptDate = new Date(appt.start);
           return (
-            apptDate.getFullYear() === new Date(dateTimeStr).getFullYear() &&
-            apptDate.getMonth() === new Date(dateTimeStr).getMonth() &&
-            apptDate.getDate() === new Date(dateTimeStr).getDate() &&
+            apptDate.getFullYear() === targetDate.getFullYear() &&
+            apptDate.getMonth() === targetDate.getMonth() &&
+            apptDate.getDate() === targetDate.getDate() &&
             apptDate.getHours() === h
           );
         });
+
         const isSelected = selectedHour === hourStr;
+
         return (
           <button
             type="button"
@@ -239,6 +245,7 @@ export default function FormularioReservas({
         <img src={CalendarCheck} alt="calendario" className="form-icon" />
         <h2>Reservar una Cita</h2>
       </div>
+
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
           <label>Nombre y Apellido del Médico</label>
@@ -251,6 +258,7 @@ export default function FormularioReservas({
             required
           />
         </div>
+
         <div className="form-group">
           <label>Nombre y Apellido del Paciente</label>
           <input
@@ -262,6 +270,7 @@ export default function FormularioReservas({
             required
           />
         </div>
+
         <div className="form-group">
           <label>Teléfono</label>
           <input
@@ -273,6 +282,7 @@ export default function FormularioReservas({
             required
           />
         </div>
+
         <div className="form-group">
           <label>Correo Electrónico</label>
           <input
@@ -284,6 +294,7 @@ export default function FormularioReservas({
             required
           />
         </div>
+
         <div className="form-group">
           <label>Obra Social</label>
           <select
@@ -300,6 +311,7 @@ export default function FormularioReservas({
             ))}
           </select>
         </div>
+
         <div className="form-group">
           <label>Fecha del Turno</label>
           <input
@@ -312,12 +324,14 @@ export default function FormularioReservas({
             max={getMaxDateOnly()}
           />
         </div>
+
         {formData.fechaTurnoFecha && (
           <div className="form-group">
             <label>Hora del Turno</label>
             <div className="hour-badges-row">{hourBadges}</div>
           </div>
         )}
+
         <button type="submit" className="btn">
           Reservar Turno
         </button>
@@ -327,6 +341,8 @@ export default function FormularioReservas({
         <h3>Calendario de citas</h3>
         <Calendar
           localizer={localizer}
+          culture="es"
+          messages={messages}
           events={appointments}
           startAccessor="start"
           endAccessor="end"
@@ -339,6 +355,12 @@ export default function FormularioReservas({
           eventPropGetter={eventPropGetter}
           min={getMinDateTime()}
           max={getMaxDateTime()}
+          formats={{
+            weekdayFormat: (date, culture, loc) =>
+              capitalize(loc.format(date, "ddd", culture)),
+            monthHeaderFormat: (date, culture, loc) =>
+              capitalize(loc.format(date, "MMMM · YYYY", culture)),
+          }}
         />
       </div>
     </div>
