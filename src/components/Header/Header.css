@@ -90,36 +90,54 @@
   height: 40px;
   background: transparent;
   border: none;
+  flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 6px;
+  padding: 0;
+  position: relative;
+  /* ⭐ importante para posicionar las líneas dentro */
 }
 
 .burger span {
-  display: block;
+  position: absolute;
+  left: 50%;
   width: 22px;
   height: 3px;
   background: var(--text-dark);
-  margin: 3px 0;
-  transition: transform 0.22s cubic-bezier(.2, .9, .2, 1),
-    opacity 0.18s ease, background 0.12s;
-  transform-origin: center;
   border-radius: 3px;
+  transition:
+    transform 0.22s cubic-bezier(.2, .9, .2, 1),
+    opacity 0.18s ease,
+    background 0.12s;
 }
 
+/* Posiciones en estado cerrado */
+.burger span:nth-child(1) {
+  transform: translate(-50%, -7px);
+}
+
+.burger span:nth-child(2) {
+  transform: translate(-50%, 0);
+}
+
+.burger span:nth-child(3) {
+  transform: translate(-50%, 7px);
+}
+
+/* Estado abierto → forma de X perfecta */
 .burger.open span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
+  transform: translate(-50%, 0) rotate(45deg);
 }
 
 .burger.open span:nth-child(2) {
   opacity: 0;
-  transform: scaleX(0.6);
+  transform: translate(-50%, 0) scaleX(0.5);
 }
 
 .burger.open span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
+  transform: translate(-50%, 0) rotate(-45deg);
 }
 
 .burger:focus {

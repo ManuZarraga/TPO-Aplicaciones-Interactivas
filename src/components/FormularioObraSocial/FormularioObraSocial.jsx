@@ -25,6 +25,7 @@ export default function FormularioObraSocial({
       </button>
       <div className="formulario">
         <h2>Obras Sociales</h2>
+
         <form onSubmit={handleSubmit} className="form-container">
           <div className="form-group">
             <label>Agregar Obra Social</label>
@@ -45,21 +46,25 @@ export default function FormularioObraSocial({
             </button>
           </div>
         </form>
+
         <h3>Eliminar Obra Social</h3>
-        <ul className="obra-social-list">
-          {obrasSociales.map((obra, idx) => (
-            <li key={idx} className="obra-social-item">
-              {obra}
-              <button
-                className="delete-obra-btn"
-                onClick={() => onDeleteObraSocial(obra)}
-                title={`Eliminar ${obra}`}
-              >
-                🗑️
-              </button>
-            </li>
-          ))}
-        </ul>
+
+        <div className="obra-social-list-wrapper">
+          <ul className="obra-social-list">
+            {obrasSociales.map((obra, idx) => (
+              <li key={idx} className="obra-social-item">
+                {obra}
+                <button
+                  className="delete-obra-btn"
+                  onClick={() => onDeleteObraSocial(obra)}
+                  title={`Eliminar ${obra}`}
+                >
+                  🗑️
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
