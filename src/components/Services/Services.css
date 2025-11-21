@@ -1,13 +1,10 @@
 .services {
   background: var(--white);
-  padding: 24px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: var(--shadow);
 }
 
-.services h2 {
-  margin: 0 0 12px 0;
-}
 
 .services-header {
   display: flex;
@@ -48,5 +45,9 @@
 @media (max-width: 800px) {
   .cards {
     flex-direction: column;
+  }
+
+  .card p {
+    font-size: 0.9rem;
   }
 }

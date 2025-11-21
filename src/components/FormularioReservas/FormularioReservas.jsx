@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -23,6 +23,30 @@ export default function FormularioReservas({
     fechaTurnoFecha: "",
   });
   const [selectedHour, setSelectedHour] = useState("");
+
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const [currentView, setCurrentView] = useState("month");
+
+  const mobileViews = ["day", "agenda"];
+  const desktopViews = ["month", "day"];
+
+  const activeViews = isMobile ? mobileViews : desktopViews;
+  const defaultView = isMobile ? "day" : "month";
+
+  const safeView = activeViews.includes(currentView)
+    ? currentView
+    : defaultView;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,7 +74,7 @@ export default function FormularioReservas({
 
   function getMaxDateTime() {
     const today = new Date();
-    today.setHours(17, 0, 0, 0);
+    today.setHours(17, 59, 59, 999);
     return today;
   }
 
@@ -65,7 +89,6 @@ export default function FormularioReservas({
       return;
     }
 
-    // Combinar fecha + hora en un solo Date
     const selectedDate = new Date(`${fecha}T${hora}`);
     const now = new Date();
     now.setSeconds(0, 0);
@@ -307,6 +330,11 @@ export default function FormularioReservas({
           events={appointments}
           startAccessor="start"
           endAccessor="end"
+          view={safeView}
+          onView={setCurrentView}
+          views={activeViews}
+          popup
+          className="rbc-calendar-custom"
           style={{ height: 400 }}
           eventPropGetter={eventPropGetter}
           min={getMinDateTime()}

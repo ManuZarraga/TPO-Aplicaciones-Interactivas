@@ -5,9 +5,6 @@
   box-shadow: var(--shadow);
 }
 
-.contact-card h2 {
-  margin: 0 0 8px 0;
-}
 
 .contact-card p {
   margin: 6px 0;
@@ -54,4 +51,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 800px) {
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-card p,
+  span {
+    font-size: 0.9rem;
+  }
 }
