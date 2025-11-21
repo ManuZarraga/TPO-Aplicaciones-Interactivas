@@ -247,7 +247,7 @@ export default function FormularioReservas({
       </div>
 
       <form onSubmit={handleSubmit} className="form-container">
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Nombre y Apellido del Médico</label>
           <input
             type="text"
@@ -257,7 +257,7 @@ export default function FormularioReservas({
             placeholder="Ej: Dr. John Doe"
             required
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label>Nombre y Apellido del Paciente</label>

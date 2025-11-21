@@ -146,8 +146,12 @@
         border-radius: 12px;
     }
 
+    .info-header {
+        gap: 5px;
+    }
+
     .info-header h3 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     .info-header p {

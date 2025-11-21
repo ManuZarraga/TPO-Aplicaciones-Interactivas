@@ -9,7 +9,7 @@ export default function InfoMedico() {
         <div className="info-header">
           <img src={ClinicIcon} alt="ícono" className="clinic-icon" />
           <div className="title-wrap">
-            <h3>Dr. John Gosling</h3>
+            <h3>John Gosling</h3>
             <p className="role">Cardiólogo Clínico</p>
           </div>
         </div>

@@ -1,4 +1,7 @@
 import DoctorBag from "../../assets/doctor-bag-svgrepo-com.svg";
+import HeartIcon from "../../assets/heart-illustration-1-svgrepo-com.svg";
+import Electrocardio from "../../assets/electrocardiogram-svgrepo-com.svg";
+import Chequeo from "../../assets/stethoscope-svgrepo-com.svg";
 import "./Services.css";
 
 const services = [
@@ -6,34 +9,48 @@ const services = [
     id: 1,
     title: "Chequeo Cardiológico",
     desc: "Evaluación completa del estado cardíaco y seguimiento.",
+    iconSrc: Chequeo,
+    iconAlt: "Chequeo cardiológico",
   },
   {
     id: 2,
     title: "Electrocardiograma",
     desc: "ECG de reposo y de esfuerzo con interpretación profesional.",
+    iconSrc: Electrocardio,
+    iconAlt: "Electrocardiograma",
   },
   {
     id: 3,
     title: "Ecocardiograma",
     desc: "Estudio ecográfico para valorar estructura y función cardíaca.",
+    iconSrc: HeartIcon,
+    iconAlt: "Ecocardiograma",
   },
 ];
 
 export default function Services() {
   return (
-    <div className="services">
-      <div className="services-header">
+    <section className="services">
+      <header className="services-header">
         <img src={DoctorBag} alt="servicios" className="services-icon" />
         <h2>Servicios</h2>
-      </div>
-      <div className="cards">
+      </header>
+
+      <div className="services-cards">
         {services.map((s) => (
-          <div key={s.id} className="card">
-            <h4>{s.title}</h4>
-            <p>{s.desc}</p>
-          </div>
+          <article key={s.id} className="service-card">
+            <div className="service-card-icon-wrapper">
+              <img
+                src={s.iconSrc}
+                alt={s.iconAlt}
+                className="service-card-icon"
+              />
+            </div>
+            <h4 className="service-card-title">{s.title}</h4>
+            <p className="service-card-desc">{s.desc}</p>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

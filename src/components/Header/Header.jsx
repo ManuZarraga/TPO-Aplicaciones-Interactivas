@@ -10,7 +10,7 @@ export default function Header({ isAuthenticated = false }) {
     <header className="site-header">
       <div className="header-inner container">
         <div className="brand">
-          <Link to="/">Consultorio Médico</Link>
+          <Link to="/">Cardiológia Gosling</Link>
         </div>
 
         <nav className={`nav ${open ? "open" : ""}`} aria-expanded={open}>
@@ -41,7 +41,6 @@ export default function Header({ isAuthenticated = false }) {
           >
             {isAuthenticated ? "Admin Panel" : "Acceder"}
           </Link>
-          {/* logout handled inside AdminPanel; header only links to login/admin */}
         </nav>
 
         <button
