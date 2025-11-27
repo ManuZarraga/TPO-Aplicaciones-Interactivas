@@ -1,0 +1,214 @@
+.formulario {
+    background: var(--white);
+    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.formulario h2 {
+    font-size: 1.15rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.formulario h3 {
+    font-size: 1.05rem;
+    margin: 18px 0 8px 0;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #e1e4f2;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: #f9f9ff;
+    transition: border 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 0 2px rgba(76, 110, 245, 0.2);
+}
+
+.formulario button {
+    align-self: flex-start;
+    /* margin-top: 10px; */
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.formulario button:hover {
+    background: var(--secondary);
+}
+
+.formulario .form-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.popup-content {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0;
+    min-width: 260px;
+    max-width: 370px;
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.obra-social-list-wrapper {
+    margin-top: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.obra-social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.obra-social-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f6ff;
+    border: 1px solid #d9ddf5;
+    border-radius: 8px;
+    padding: 10px 10px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    min-height: 30px;
+    box-shadow: none;
+}
+
+.obra-social-item:hover {
+    background: #eef0ff;
+}
+
+.delete-obra-btn {
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 8px !important;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .popup-content {
+        width: 92vw !important;
+        max-width: 360px !important;
+        min-width: unset !important;
+        margin: 32px auto !important;
+        padding: 0 !important;
+        border-radius: 14px;
+        box-sizing: border-box;
+        max-height: 90vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .formulario {
+        padding: 10px 8px;
+        gap: 12px;
+    }
+
+    .formulario-obra-social-popup {
+        min-width: 90vw;
+        max-width: 98vw;
+    }
+
+    .popup-content {
+        min-width: 90vw !important;
+        max-width: 96vw !important;
+        width: 96vw;
+        margin: 0 2vw;
+        padding: 0 !important;
+    }
+
+    .obra-social-list-wrapper {
+        max-height: 160px;
+    }
+
+    .obra-social-item {
+        padding: 5px 8px;
+        font-size: 0.85rem;
+        min-height: 26px;
+    }
+
+    .delete-obra-btn {
+        padding: 3px 7px;
+        font-size: 0.85rem;
+    }
+}

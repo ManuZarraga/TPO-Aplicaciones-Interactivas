@@ -1,0 +1,31 @@
+.site-footer {
+  margin-top: 36px;
+  padding: 18px 0;
+  background: transparent;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: center;
+  color: var(--text-light);
+  font-size: 1rem;
+  padding: 0 12px;
+}
+
+.footer-inner .small {
+  opacity: 0.8
+}
+
+@media (max-width: 700px) {
+  .footer-inner {
+    gap: 0px !important;
+    font-size: 0.7rem;
+  }
+
+  .site-footer {
+    padding: 0 !important;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+}

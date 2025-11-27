@@ -1,0 +1,106 @@
+/* ==== VARIABLES DE COLOR ==== */
+:root {
+  --primary: #4c6ef5;
+  --secondary: #5c7cfa;
+  --danger: #ff6b6b;
+  --success: #51cf66;
+  --bg: #f5f7fb;
+  --white: #fff;
+  --text-dark: #2d2d2d;
+  --text-light: #6c757d;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --radius: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+
+}
+
+html,
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ==== TOAST ==== */
+.custom-toast {
+  background: #e6faea !important;
+  color: #1b5e20 !important;
+  font-weight: 500;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.08);
+}
+
+.Toastify__toast--error {
+  background: #ffeaea !important;
+  color: #b71c1c !important;
+  font-weight: 500;
+  border-radius: 10px !important;
+}
+
+/* ==== LAYOUT GENERAL ==== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f7f8fc;
+  overflow: visible;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px;
+  background: #f7f8fc;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1024px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    /* padding: 12px; */
+    gap: 16px;
+  }
+
+  .info-medico,
+  .mis-citas,
+  .calendario {
+    padding: 12px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    /* padding: 6px; */
+    gap: 10px;
+  }
+
+}
