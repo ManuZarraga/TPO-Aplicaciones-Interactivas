@@ -107,9 +107,30 @@ export default function FormularioReservas({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { fechaTurnoFecha } = formData;
+    const { nombrePaciente, telefono, email, fechaTurnoFecha } = formData;
     const fecha = fechaTurnoFecha;
     const hora = selectedHour;
+
+    const nameRegex = /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ\s']+$/;
+    const phoneRegex = /^[0-9()+\-\s]+$/; // solo dígitos, +, -, (), espacios
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nameRegex.test(nombrePaciente.trim())) {
+      toast.error("El nombre solo puede contener letras y espacios.");
+      return;
+    }
+
+    if (!phoneRegex.test(telefono.trim())) {
+      toast.error(
+        "El teléfono solo puede contener números y símbolos (+ - ( ) )."
+      );
+      return;
+    }
+
+    if (!emailRegex.test(email.trim())) {
+      toast.error("Ingrese un correo electrónico válido.");
+      return;
+    }
 
     if (!fecha || !hora) {
       toast.error("Debe seleccionar una fecha y una hora disponible.");
