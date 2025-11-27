@@ -195,6 +195,9 @@ export default function FormularioReservas({
     } else if (event.estado === "Cancelado") {
       backgroundColor = "#ffa8a8";
       color = "#842029";
+    } else if (event.estado === "Finalizado") {
+      backgroundColor = "#7d7d7d";
+      color = "#ffffff";
     }
 
     return {

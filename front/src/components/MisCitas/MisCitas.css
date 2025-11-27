@@ -64,6 +64,11 @@
     color: #842029;
 }
 
+.estado.finalizado {
+    background: #7d7d7d;
+    color: #ffffff;
+}
+
 .acciones {
     display: flex;
     gap: 8px;

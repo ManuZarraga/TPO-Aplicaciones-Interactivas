@@ -1,5 +1,6 @@
 import { TimeLike } from 'fs';
 import { TurnosModel } from '../models';
+import { sendTurnoReservadoEmail, sendTurnoConfirmadoEmail, sendTurnoCanceladoEmail } from './email.service';
 
 const getTurnoById = async (turnoId: string): Promise<TurnosModel> => {
   const turno = await TurnosModel.findOne({ where: { id: turnoId } });
@@ -44,17 +45,49 @@ const createTurno = async (
     hora: horaLocal,
     estado,
   });
+
+  try {
+    await sendTurnoReservadoEmail(created);
+  } catch (e) {
+    console.error('Error enviando mail de turno reservado', e);
+  }
+
   return created;
 };
 
 const updateEstadoTurno = async (turnoId: string, estado: string) => {
+  const turnoAnterior = await TurnosModel.findOne({ where: { id: turnoId } });
+
   await TurnosModel.update({ estado }, { where: { id: turnoId } });
   const updated = await TurnosModel.findOne({ where: { id: turnoId } });
+
+  if (turnoAnterior && turnoAnterior.estado === 'Reservado' && estado === 'Confirmado') {
+    try {
+      await sendTurnoConfirmadoEmail(updated);
+    } catch (e) {
+      console.error('Error enviando mail de turno confirmado', e);
+    }
+  }
+
   return updated;
 };
 
 const deleteTurno = async (turnoId: string) => {
-  const deletedTurno = await TurnosModel.destroy({ where: { id: turnoId } });
+  const turno = await TurnosModel.findOne({ where: { id: turnoId } });
+
+  if (!turno) {
+    return;
+  }
+  const estabaReservado = turno.estado === 'Reservado' || turno.estado === 'Confirmado';
+  await TurnosModel.destroy({ where: { id: turnoId } });
+
+  if (estabaReservado) {
+    try {
+      await sendTurnoCanceladoEmail(turno);
+    } catch (e) {
+      console.error('Error enviando mail de turno cancelado', e);
+    }
+  }
 };
 
 export const turnosService = {
