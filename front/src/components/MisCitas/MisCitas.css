@@ -49,6 +49,11 @@
     color: #856404;
 }
 
+.estado.reservado {
+    background: #ffe066;
+    color: #856404;
+}
+
 .estado.confirmado {
     background: #d3f9d8;
     color: #2b8a3e;
@@ -185,7 +190,7 @@
 
     .popup-content {
         padding: 0.9rem;
-    
+
         max-width: calc(100% - 32px);
         width: auto;
         box-sizing: border-box;

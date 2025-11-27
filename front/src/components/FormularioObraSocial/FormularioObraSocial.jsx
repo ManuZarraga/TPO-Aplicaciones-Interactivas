@@ -51,13 +51,13 @@ export default function FormularioObraSocial({
 
         <div className="obra-social-list-wrapper">
           <ul className="obra-social-list">
-            {obrasSociales.map((obra, idx) => (
-              <li key={idx} className="obra-social-item">
-                {obra}
+            {obrasSociales.map((obra) => (
+              <li key={obra.id} className="obra-social-item">
+                {obra.nombre}
                 <button
                   className="delete-obra-btn"
-                  onClick={() => onDeleteObraSocial(obra)}
-                  title={`Eliminar ${obra}`}
+                  onClick={() => onDeleteObraSocial(obra.id)}
+                  title={`Eliminar ${obra.nombre}`}
                 >
                   🗑️
                 </button>

@@ -21,6 +21,9 @@ export default function MisCitas({
                 <strong>Nombre:</strong> {cita.nombre}
               </p>
               <p>
+                <strong>Email:</strong> {cita.email || "N/A"}
+              </p>
+              <p>
                 <strong>Fecha/Hora:</strong> {cita.fecha}
               </p>
               <p>
@@ -41,7 +44,7 @@ export default function MisCitas({
               onEdit={() =>
                 onEditAppointment(
                   cita.id,
-                  cita.estado === "Solicitado" ? "Confirmado" : "Solicitado"
+                  cita.estado === "Reservado" ? "Confirmado" : "Reservado"
                 )
               }
               onDelete={() => setDeletePopup({ open: true, cita })}

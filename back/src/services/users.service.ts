@@ -1,5 +1,3 @@
-import { plainToClass } from 'class-transformer';
-import { UserDTO } from '../types/DTOs';
 import { UsersModel } from '../models';
 
 const getUserById = async (userId: string): Promise<UsersModel> => {
@@ -8,11 +6,17 @@ const getUserById = async (userId: string): Promise<UsersModel> => {
   return user;
 };
 
-const createUser = async () => {
-  const user = await UsersModel.create({ name: 'asdsad', email: 'asdsa@ase.com', role: 'sadsad' });
+const getAllUsers = async () => {
+  const users = await UsersModel.findAll();
+  return users;
+};
+
+const createUser = async (name: string, email: string) => {
+  const user = await UsersModel.create({ name, email });
 };
 
 export const userService = {
   getUserById,
   createUser,
+  getAllUsers,
 };

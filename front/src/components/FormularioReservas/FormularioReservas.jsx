@@ -154,6 +154,7 @@ export default function FormularioReservas({
       nombre: formData.nombrePaciente,
       nombreMedico: formData.nombreMedico,
       email: formData.email,
+      telefono: formData.telefono,
       fecha: selectedDate.toLocaleString("es-AR", {
         day: "2-digit",
         month: "short",
@@ -161,24 +162,13 @@ export default function FormularioReservas({
         minute: "2-digit",
       }),
       obraSocial: formData.obraSocial,
-      estado: "Solicitado",
+      estado: "Reservado",
       title: `Consulta ${formData.nombrePaciente}`,
       start: selectedDate,
       end: new Date(selectedDate.getTime() + 30 * 60 * 1000),
     };
 
     onAddAppointment(newAppointment);
-
-    // send reservation email (best-effort)
-    fetch("http://localhost:4001/api/email/reservation", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        to: formData.email,
-        nombre: formData.nombrePaciente,
-        fecha: newAppointment.fecha,
-      }),
-    }).catch((e) => console.warn("mail send failed", e));
 
     setFormData({
       nombreMedico: "",
@@ -194,11 +184,12 @@ export default function FormularioReservas({
   const eventPropGetter = (event) => {
     let backgroundColor = "#339af0";
     let color = "#fff";
+    const estado = String(event.estado || "").toLowerCase();
 
-    if (event.estado === "Solicitado") {
+    if (estado === "solicitado" || estado === "reservado") {
       backgroundColor = "#ffe066";
       color = "#856404";
-    } else if (event.estado === "Confirmado") {
+    } else if (estado === "confirmado") {
       backgroundColor = "#d3f9d8";
       color = "#2b8a3e";
     } else if (event.estado === "Cancelado") {
@@ -221,16 +212,18 @@ export default function FormularioReservas({
     ? HOURS.map((h) => {
         const hourStr = h.toString().padStart(2, "0") + ":00";
         const dateTimeStr = `${formData.fechaTurnoFecha}T${hourStr}`;
-        const targetDate = new Date(dateTimeStr);
 
         const isTaken = appointments.some((appt) => {
           const apptDate = new Date(appt.start);
-          return (
-            apptDate.getFullYear() === targetDate.getFullYear() &&
-            apptDate.getMonth() === targetDate.getMonth() &&
-            apptDate.getDate() === targetDate.getDate() &&
-            apptDate.getHours() === h
-          );
+          const target = new Date(dateTimeStr);
+          const normalizeHour = (d) => {
+            const x = new Date(d);
+            x.setMinutes(0, 0, 0);
+            x.setSeconds(0);
+            x.setMilliseconds(0);
+            return x.getTime();
+          };
+          return normalizeHour(apptDate) === normalizeHour(target);
         });
 
         const isSelected = selectedHour === hourStr;
@@ -259,18 +252,6 @@ export default function FormularioReservas({
       </div>
 
       <form onSubmit={handleSubmit} className="form-container">
-        {/* <div className="form-group">
-          <label>Nombre y Apellido del Médico</label>
-          <input
-            type="text"
-            name="nombreMedico"
-            value={formData.nombreMedico}
-            onChange={handleChange}
-            placeholder="Ej: Dr. John Doe"
-            required
-          />
-        </div> */}
-
         <div className="form-group">
           <label>Nombre y Apellido del Paciente</label>
           <input
@@ -286,7 +267,7 @@ export default function FormularioReservas({
         <div className="form-group">
           <label>Teléfono</label>
           <input
-            type="tel"
+            type="text"
             name="telefono"
             value={formData.telefono}
             onChange={handleChange}
@@ -316,9 +297,9 @@ export default function FormularioReservas({
             required
           >
             <option value="">Seleccione una opción</option>
-            {obrasSociales.map((obra, idx) => (
-              <option key={idx} value={obra}>
-                {obra}
+            {obrasSociales.map((obra) => (
+              <option key={obra.id} value={obra.id}>
+                {obra.nombre}
               </option>
             ))}
           </select>

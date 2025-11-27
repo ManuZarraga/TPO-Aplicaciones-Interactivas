@@ -24,11 +24,6 @@ export class UsersModel extends Model<UsersModel> {
     allowNull: false,
   })
   public email: string;
-
-  @Column({
-    type: DataType.STRING,
-  })
-  public role: string;
 }
 
 export default UsersModel;

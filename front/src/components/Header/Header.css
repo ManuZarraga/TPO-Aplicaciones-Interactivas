@@ -97,7 +97,6 @@
   cursor: pointer;
   padding: 0;
   position: relative;
-  /* ⭐ importante para posicionar las líneas dentro */
 }
 
 .burger span {
@@ -113,7 +112,6 @@
     background 0.12s;
 }
 
-/* Posiciones en estado cerrado */
 .burger span:nth-child(1) {
   transform: translate(-50%, -7px);
 }
@@ -126,7 +124,6 @@
   transform: translate(-50%, 7px);
 }
 
-/* Estado abierto → forma de X perfecta */
 .burger.open span:nth-child(1) {
   transform: translate(-50%, 0) rotate(45deg);
 }
@@ -158,10 +155,8 @@
     padding: 10px 18px;
   }
 
-  /* opacity y transform para efecto de burger menu */
   .nav {
     display: flex;
-    /* keep structure */
     align-items: center;
     gap: 12px;
     opacity: 0;

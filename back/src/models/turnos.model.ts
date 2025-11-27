@@ -41,10 +41,16 @@ export class TurnosModel extends Model<TurnosModel> {
   public obra_social: ObrasSocialesModel;
 
   @Column({
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: false,
   })
   public fecha: string;
+
+  @Column({
+    type: DataType.TIME,
+    allowNull: false,
+  })
+  public hora: string;
 
   @Column({
     type: DataType.STRING,
