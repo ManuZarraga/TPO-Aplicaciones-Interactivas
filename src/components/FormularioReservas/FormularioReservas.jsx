@@ -153,6 +153,7 @@ export default function FormularioReservas({
       id: Date.now(),
       nombre: formData.nombrePaciente,
       nombreMedico: formData.nombreMedico,
+      email: formData.email,
       fecha: selectedDate.toLocaleString("es-AR", {
         day: "2-digit",
         month: "short",
@@ -167,6 +168,17 @@ export default function FormularioReservas({
     };
 
     onAddAppointment(newAppointment);
+
+    // send reservation email (best-effort)
+    fetch("http://localhost:4001/api/email/reservation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: formData.email,
+        nombre: formData.nombrePaciente,
+        fecha: newAppointment.fecha,
+      }),
+    }).catch((e) => console.warn("mail send failed", e));
 
     setFormData({
       nombreMedico: "",

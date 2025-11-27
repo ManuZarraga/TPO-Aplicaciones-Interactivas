@@ -51,12 +51,12 @@ function App() {
       id: 3,
       nombre: "Cosme Fulanito",
       nombreMedico: "Dr. John Gosling",
-      fecha: "20-nov, 15:00",
+      fecha: "27-nov, 15:00",
       obraSocial: "Galeno",
       estado: "Confirmado",
       title: "Consulta Cosme Fulanito",
-      start: new Date(2025, 10, 20, 15, 0),
-      end: new Date(2025, 10, 20, 16, 0),
+      start: new Date(2025, 10, 27, 15, 0),
+      end: new Date(2025, 10, 27, 16, 0),
     },
   ]);
 
@@ -77,6 +77,18 @@ function App() {
   const handleAddAppointment = (appointment) => {
     setAppointments([...appointments, appointment]);
     toast.success("Turno reservado correctamente");
+    // send reservation email if appointment.email present (best-effort)
+    if (appointment.email) {
+      fetch("http://localhost:4001/api/email/reservation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: appointment.email,
+          nombre: appointment.nombre,
+          fecha: appointment.fecha,
+        }),
+      }).catch((e) => console.warn("mail send failed", e));
+    }
   };
 
   const handleEditAppointment = (id, newEstado) => {
@@ -86,6 +98,22 @@ function App() {
       )
     );
     toast.success("Se modificó el estado del turno");
+
+    // if appointment became Confirmado, send confirmation email
+    if (newEstado === "Confirmado") {
+      const appToConfirm = appointments.find((a) => a.id === id);
+      if (appToConfirm && appToConfirm.email) {
+        fetch("http://localhost:4001/api/email/confirmation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            to: appToConfirm.email,
+            nombre: appToConfirm.nombre,
+            fecha: appToConfirm.fecha,
+          }),
+        }).catch((e) => console.warn("mail send failed", e));
+      }
+    }
   };
 
   const handleDeleteAppointment = (id) => {
