@@ -5,19 +5,38 @@ import AvatarMedico from "../../assets/Medico.jpg";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
+const API_BASE = "http://localhost:3000/api";
+
+// eslint-disable-next-line react/prop-types
 export default function LoginPage({ onLogin = () => {} }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "gosling@medical.com" && password === "medical123") {
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        const errorBody = await res.json().catch(() => ({}));
+        toast.error(errorBody.error || "Credenciales inválidas");
+        return;
+      }
+
+      const data = await res.json();
       toast.success("Inicio de sesión exitoso");
-      onLogin();
+
+      onLogin(data.user, data.token);
       navigate("/admin");
-    } else {
-      toast.error("Credenciales incorrectas");
+    } catch (err) {
+      console.error(err);
+      toast.error("Error al conectar con el servidor");
     }
   };
 

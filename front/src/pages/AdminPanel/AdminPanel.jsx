@@ -23,11 +23,18 @@ export default function AdminPanel({
     navigate("/");
   };
 
+  const handleGoHome = () => {
+    navigate("/");
+  };
+
   return (
     <div className="admin-panel-container">
       <div className="admin-actions">
         <button className="admin-logout-btn" onClick={handleLogout}>
           Logout
+        </button>
+        <button className="btn" onClick={handleGoHome}>
+          Volver al Inicio
         </button>
         <button className="btn" onClick={() => setShowObrasPopup(true)}>
           Gestionar Obras Sociales

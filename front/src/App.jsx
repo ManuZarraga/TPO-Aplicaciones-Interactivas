@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -20,11 +21,34 @@ const API_BASE = "http://localhost:3000/api";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [obrasSociales, setObrasSociales] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [doctorName, setDoctorName] = useState("Dr. John Gosling");
 
-  const handleLogin = () => setIsAuthenticated(true);
-  const handleLogout = () => setIsAuthenticated(false);
+  const handleLogin = (userData, token) => {
+    setIsAuthenticated(true);
+    setCurrentUser(userData);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  };
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+
+    if (savedToken && savedUser) {
+      setIsAuthenticated(true);
+      const user = JSON.parse(savedUser);
+      setCurrentUser(user);
+    }
+  }, []);
 
   useEffect(() => {
     Promise.all([
