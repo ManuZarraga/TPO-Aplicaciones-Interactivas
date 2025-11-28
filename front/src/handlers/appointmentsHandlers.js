@@ -3,6 +3,14 @@ import { mapTurnoToAppointment } from "../utils/appointments";
 
 const API_BASE = "http://localhost:3000/api";
 
+function getAuthHeaders() {
+    const token = localStorage.getItem("token");
+    if (!token) return {};
+    return {
+        Authorization: `Bearer ${token}`,
+    };
+}
+
 export function createAppointmentsHandlers({
     obrasSociales,
     doctorName,
@@ -66,7 +74,7 @@ export function createAppointmentsHandlers({
         try {
             const res = await fetch(`${API_BASE}/turnos/${id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", ...getAuthHeaders() },
                 body: JSON.stringify({ estado: newEstado }),
             });
             const updated = await res.json();
@@ -96,6 +104,7 @@ export function createAppointmentsHandlers({
         try {
             const res = await fetch(`${API_BASE}/turnos/${id}`, {
                 method: "DELETE",
+                headers: { ...getAuthHeaders(), },
             });
             if (res.status === 204 || res.ok) {
                 setAppointments((prev) => prev.filter((app) => app.id !== id));

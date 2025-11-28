@@ -43,7 +43,7 @@ export async function sendTurnoCanceladoEmail(turno: TurnosModel) {
     text: `Hola ${turno.nombre_paciente}, lamentamos informar tu turno con fecha ${turno.fecha} a las ${turno.hora} fue cancelado. Te invitamos a visitar nuestro sitio web para reservar un nuevo turno en otra fecha.`,
     html: `
       <p>Hola <b>${turno.nombre_paciente}</b>,</p>
-      <p>Lamentamos informar que tu  con fecha <b>${turno.fecha}</b> a las <b>${turno.hora}</b> turno fue <b>cancelado</b>.</p>
+      <p>Lamentamos informar que tu turno con fecha <b>${turno.fecha}</b> a las <b>${turno.hora}</b> fue <b>cancelado</b>.</p>
       <p>Te invitamos a visitar nuestro sitio web para reservar un nuevo turno en otra fecha.</p>
     `,
   });

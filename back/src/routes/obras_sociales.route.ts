@@ -6,7 +6,6 @@ const router: Router = Router();
 
 router.route('/:obraId').get(obrasSocialesController.getObraById);
 router.route('/').get(obrasSocialesController.getAllObrasSociales);
-router.route('/').post(obrasSocialesController.createObraSocial);
 
 router.route('/').post(middlewareController.authMiddleware, obrasSocialesController.createObraSocial);
 

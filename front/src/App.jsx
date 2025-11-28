@@ -102,8 +102,6 @@ function App() {
                 obrasSociales={obrasSociales}
                 appointments={appointments}
                 onAddAppointment={handleAddAppointment}
-                onAddObraSocial={handleAddObraSocial}
-                onDeleteObraSocial={handleDeleteObraSocial}
                 isAuthenticated={isAuthenticated}
                 onLogout={handleLogout}
               />
