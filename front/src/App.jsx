@@ -19,9 +19,18 @@ import { createAppointmentsHandlers } from "./handlers/appointmentsHandlers";
 const API_BASE = "http://localhost:3000/api";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const savedToken = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+    return !!(savedToken && savedUser);
+  });
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
   const [obrasSociales, setObrasSociales] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [doctorName, setDoctorName] = useState("Dr. John Gosling");
 
@@ -38,17 +47,6 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
-
-  useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    const savedUser = localStorage.getItem("user");
-
-    if (savedToken && savedUser) {
-      setIsAuthenticated(true);
-      const user = JSON.parse(savedUser);
-      setCurrentUser(user);
-    }
-  }, []);
 
   useEffect(() => {
     Promise.all([
