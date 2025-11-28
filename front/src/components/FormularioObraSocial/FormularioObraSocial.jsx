@@ -7,15 +7,32 @@ export default function FormularioObraSocial({
   onAddObraSocial,
   obrasSociales,
   onDeleteObraSocial,
+  onEditObraSocial,
 }) {
   const [nombreObraSocial, setNombreObraSocial] = useState("");
+  const [editingId, setEditingId] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (nombreObraSocial.trim()) {
-      onAddObraSocial(nombreObraSocial.trim());
+      if (editingId) {
+        onEditObraSocial(editingId, nombreObraSocial.trim());
+        setEditingId(null);
+      } else {
+        onAddObraSocial(nombreObraSocial.trim());
+      }
       setNombreObraSocial("");
     }
+  };
+
+  const startEdit = (obra) => {
+    setEditingId(obra.id);
+    setNombreObraSocial(obra.nombre || "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setNombreObraSocial("");
   };
 
   return (
@@ -28,7 +45,9 @@ export default function FormularioObraSocial({
 
         <form onSubmit={handleSubmit} className="form-container">
           <div className="form-group">
-            <label>Agregar Obra Social</label>
+            <label>
+              {editingId ? "Modificar Obra Social" : "Agregar Obra Social"}
+            </label>
             <input
               type="text"
               value={nombreObraSocial}
@@ -39,10 +58,14 @@ export default function FormularioObraSocial({
           </div>
           <div className="form-actions">
             <button type="submit" className="btn">
-              Agregar
+              {editingId ? "Guardar" : "Agregar"}
             </button>
-            <button type="button" className="btn" onClick={onClose}>
-              Cancelar
+            <button
+              type="button"
+              className="btn"
+              onClick={editingId ? cancelEdit : onClose}
+            >
+              {editingId ? "Cancelar" : "Cancelar"}
             </button>
           </div>
         </form>
@@ -54,13 +77,22 @@ export default function FormularioObraSocial({
             {obrasSociales.map((obra) => (
               <li key={obra.id} className="obra-social-item">
                 {obra.nombre}
-                <button
-                  className="delete-obra-btn"
-                  onClick={() => onDeleteObraSocial(obra.id)}
-                  title={`Eliminar ${obra.nombre}`}
-                >
-                  🗑️
-                </button>
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <button
+                    className="delete-obra-btn"
+                    onClick={() => startEdit(obra)}
+                    title={`Editar ${obra.nombre}`}
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    className="delete-obra-btn"
+                    onClick={() => onDeleteObraSocial(obra.id)}
+                    title={`Eliminar ${obra.nombre}`}
+                  >
+                    🗑️
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

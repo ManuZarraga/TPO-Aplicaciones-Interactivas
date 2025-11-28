@@ -76,7 +76,7 @@ function App() {
       .catch((e) => console.warn("failed loading initial data", e));
   }, []);
 
-  const { handleAddObraSocial, handleDeleteObraSocial } =
+  const { handleAddObraSocial, handleDeleteObraSocial, handleEditObraSocial } =
     createObrasSocialesHandlers({ setObrasSociales });
 
   const {
@@ -118,6 +118,7 @@ function App() {
                   obrasSociales={obrasSociales}
                   onAddObraSocial={handleAddObraSocial}
                   onDeleteObraSocial={handleDeleteObraSocial}
+                  onEditObraSocial={handleEditObraSocial}
                 />
               ) : (
                 <Navigate to="/login" replace />

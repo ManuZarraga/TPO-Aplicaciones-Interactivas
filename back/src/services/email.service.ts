@@ -1,4 +1,3 @@
-// back/src/services/email.service.ts
 import { mailerTransporter } from '../config/mailer';
 import { TurnosModel } from '../models';
 

@@ -8,6 +8,17 @@
     gap: 18px;
 }
 
+.popup-content .formulario-obra-social-popup {
+    background: transparent;
+    padding: 0;
+}
+
+.popup-content .formulario {
+    background: transparent;
+    box-shadow: none;
+    padding: 16px 0;
+}
+
 .formulario h2 {
     font-size: 1.15rem;
     color: var(--primary);
@@ -76,6 +87,7 @@
 .formulario .form-actions {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 12px;
     margin-top: 10px;
 }
@@ -98,8 +110,9 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 0;
-    min-width: 260px;
-    max-width: 370px;
+    min-width: 300px;
+    max-width: 440px;
+    width: 92%;
     position: relative;
 }
 
@@ -166,7 +179,7 @@
 @media (max-width: 600px) {
     .popup-content {
         width: 92vw !important;
-        max-width: 360px !important;
+        max-width: 420px !important;
         min-width: unset !important;
         margin: 32px auto !important;
         padding: 0 !important;
@@ -210,5 +223,10 @@
     .delete-obra-btn {
         padding: 3px 7px;
         font-size: 0.85rem;
+    }
+
+    .formulario .form-actions {
+        flex-direction: row;
+        gap: 8px;
     }
 }

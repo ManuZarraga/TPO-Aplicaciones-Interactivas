@@ -26,6 +26,23 @@ const createObraSocial = async (req: Request, res: Response, next: NextFunction)
     const obraSocial = await obrasSocialesService.createObraSocial(req.body.nombre);
     res.send(obraSocial);
   } catch (error) {
+    if ((error as any)?.code === 'DUPLICATE' || (error as any)?.message === 'DUPLICATE') {
+      return res.status(409).send({ error: 'Obra social ya existe' });
+    }
+    next(error);
+  }
+};
+
+const updateNombreObraSocial = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { nombre } = req.body;
+    if (typeof nombre === 'undefined') {
+      return res.status(400).send({ error: 'Falta el campo "nombre" en el body' });
+    }
+
+    const updatedObra = await obrasSocialesService.updateNombreObraSocial(req.params.obraId, nombre);
+    res.send(updatedObra);
+  } catch (error) {
     next(error);
   }
 };
@@ -43,5 +60,6 @@ export const obrasSocialesController = {
   getObraById,
   getAllObrasSociales,
   createObraSocial,
+  updateNombreObraSocial,
   deleteObraSocial,
 };

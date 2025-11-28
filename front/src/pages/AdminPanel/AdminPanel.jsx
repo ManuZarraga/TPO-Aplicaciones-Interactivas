@@ -14,6 +14,7 @@ export default function AdminPanel({
   obrasSociales = [],
   onAddObraSocial = () => {},
   onDeleteObraSocial = () => {},
+  onEditObraSocial = () => {},
 }) {
   const navigate = useNavigate();
   const [showObrasPopup, setShowObrasPopup] = useState(false);
@@ -49,6 +50,7 @@ export default function AdminPanel({
               onAddObraSocial={onAddObraSocial}
               obrasSociales={obrasSociales}
               onDeleteObraSocial={onDeleteObraSocial}
+              onEditObraSocial={onEditObraSocial}
             />
           </div>
         </div>

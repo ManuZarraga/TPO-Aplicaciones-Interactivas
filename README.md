@@ -78,6 +78,7 @@ Backend (desarrollo)
 
 ```bash
 cd back
+docker-compose up
 npm install
 npm run dev
 ```
@@ -94,11 +95,11 @@ Por defecto el backend corre en `http://localhost:3000` y expone los endpoints b
 
 ## 🐳 Docker
 
-Hay un `docker-compose.yml` en la carpeta `back` pensado para facilitar el despliegue local (servicio de base de datos, y el backend). Para usarlo:
+Hay un `docker-compose.yml` en la carpeta `back` pensado para facilitar el despliegue local (levantar el servicio de base de datos, y el backend). Para usarlo:
 
 ```bash
 cd back
-docker-compose up --build
+docker-compose up
 ```
 
 Esto levantará la base de datos y el backend según la configuración definida. Para ver los servicios y puerto expuestos, revisar `back/docker-compose.yml`.
@@ -112,6 +113,7 @@ Los endpoints más usados por el frontend son:
 - `GET /api/obras_sociales` → listar obras sociales
 - `GET /api/obras_sociales/:id` → obtener informacion de una obra social
 - `POST /api/obras_sociales` → crear obra social
+- `PUT /api/obras_sociales/:id` → actualizar obra social (cambiar `nombre`)
 - `DELETE /api/obras_sociales/:id` → eliminar obra social
 - `GET /api/turnos` → listar turnos
 - `GET /api/turnos/:id` → obtener informacion de un turno
